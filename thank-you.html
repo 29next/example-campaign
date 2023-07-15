@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <title>Drone Hawk</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+
+<body class="bg-checkout d-flex flex-column h-100 vh-100">
+    <div class="topbar py-3 py-lg-4">
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-md-5 d-flex justify-content-center justify-content-md-start align-items-center pb-2 pb-md-0">
+                    <div class="logo">
+                        <img src="img/drone-hawk-logo.png" alt="Drone Hawk" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-md-7 d-flex justify-content-center justify-content-md-end align-items-center">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item is-complete"><span>CHECKOUT</span></li>
+                            <li class="breadcrumb-item is-complete">UPGRADES</li>
+                            <li class="breadcrumb-item is-current">SUMMARY</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="main h-100">
+        <div class="container-fluid">
+            <div class="row ">
+                <div class="col text-center  py-5">
+                    <div class="up-top-hdng pb-5">
+                        <p class="up-hdng-txt1 h2 fw-bold text-dark"> <i class="d-none d-sm-inline-block fas fa-caret-right bounce-arrow me-1"></i><span>Congratulations! Your Order Is Complete! </span> <i class="d-none d-sm-inline-block fas fa-caret-left bounce-arrow-r ms-1"></i></p>
+                        <p class="up-hdng-txt2 h6 text-dark">Your Package Will Be Shipped Within 1 - 2 Business Days.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-11">
+                    <div class="row up-box bg-white justify-content-center p-4 mb-4">
+                       <div class="col-xl-11">
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="fs-2 fw-bold text-center">Order Receipt</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-11 order-receipt-header bg-xlight">
+                        </div>
+                        <div class="col-xl-11 order-receipt-items-header">
+                            <div class="row">
+                                <div class="col py-3">
+                                    <div class="fs-4 fw-bold text-center">Your Order:</div>
+                                </div>
+                            </div>
+                            <div class="row mb-4 border-bottom text-uppercase">
+                                <div class="col-8 p-2  fs-7 ">
+                                    <div class="summary-item-title">Item</div>
+                                </div>
+                                <div class="col-2  p-2  fs-7 text-end">
+                                    <div class="summary-item-qty-title">Qty.</div>
+                                </div>
+                                <div class="col-2  p-2 fs-7 text-end">
+                                    <div class="summary-item-item-total-title">Total</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-11 order-receipt-items">
+                        </div>
+                        <div class="col-xl-11 order-receipt-summary rounded-3 p-3 bg-xlight mt-4">
+                        </div>
+                        <div class="col-xl-11 order-receipt-footer">
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        </div>
+        </div>
+    </section>
+   <footer class="footer mt-auto">
+        <div class="container pt-4 pb-5">
+            <div class="row">
+                <div class="col-12 mt-3 pt-2 text-center footer-copyright d-flex flex-column flex-sm-row  justify-content-between align-items-center">
+                    <div class="mb-4 mb-sm-0 fs-8 text-light">
+                        ©2023 <span class="text-secondary">Drone Hawk </span>. All Rights Reserved.
+                    </div>
+                    <div class="poweredby-badge-desktop">
+                        <a href="#" target="_blank"><img src="img/checkoutbysellmorelight.svg" class="img-fluid"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>    
+<script type="text/javascript" src="js/campaign.js" ></script>
+<script type="text/javascript" src="js/receipt.js" ></script>
+<script>
+refId = sessionStorage.getItem('ref_id');
+
+
+const receiptUpsell = document.querySelector('.receipt-upsell')
+
+document.addEventListener("DOMContentLoaded", function(event) {
+
+
+    getOrderReceipt();
+
+
+});
+
+
+
+</script>
+
+
+</html>

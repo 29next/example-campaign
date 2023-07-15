@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade" />
+    <title>Drone Hawk</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+
+<body class="d-flex flex-column h-100 vh-100 bg-checkout">
+    <div class="bg-danger">
+        <div class="container">
+            <div class="row justify-content-center align-items-center">
+                <div class="col text-center text-white p-2 ">
+                    Special Offer Unlocked - <span class="fw-bold">Do Not Close This Page</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="topbar py-3 py-lg-4">
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-md-5 d-flex justify-content-center justify-content-md-start align-items-center">
+                    <div class="logo">
+                        <img src="img/drone-hawk-logo.png" alt="Drone Hawk" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-md-7 d-flex justify-content-center justify-content-md-end align-items-center">
+                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item is-complete"><span>CHECKOUT</span></li>
+                            <li class="breadcrumb-item is-current">UPGRADES</li>
+                            <li class="breadcrumb-item">SUMMARY</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="main h-100">
+        <div class="container-fluid">
+            <div class="row ">
+                <div class="col text-center  py-5">
+                    <div class="pb-5">
+                        <p class="h2 fw-bold text-dark"><span>Wait! Exclusive Offer To Complement Your Order!</span> </p>
+                        <p class="h6">Upsell Product Name </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-11">
+                    <div class="row up-box bg-white">
+                        <div class="col-lg-6 py-4 px-0 p-lg-4">
+                            <div class="text-center">
+                                <div class="fw-bold fs-5">
+                                    Flash Sale - Save 20% Off Today Only 
+                                </div>
+                                <div class="mt-3 py-3 fw-bold fs-4 border-top border-bottom text-secondary"><span class="fs-2 text-dark">Upsell Product Name</span><br>simply random text</div>
+                                <div class="d-lg-none text-center">
+                                    <img src="img/up1.png" class="img-fluid">
+                                </div>
+                                <ul class="up-list my-3">
+                                    <li>The standard chunk of Lorem Ipsum</li>
+                                    <li>Contrary to popular belief, Lorem Ipsum</li>
+                                    <li>Lorem Ipsum has been the industry's</li>
+                                    <li>Lorem Ipsum is simply dummy text</li>
+                                </ul>
+                               
+                                <div class="up-prcBox d-flex justify-content-center align-items-center">
+                                    <div class="prc-bx ret-prc p-3 border-end">
+                                        <div class="fs-7">Retail Price</div>
+                                        <span class="originalPrice fs-1 fw-bold text-muted">$100.00</span>
+                                    </div>
+                                    <div class="prc-bx ofr-prc p-3">
+                                        <div class="fs-7">Offer Price</div>
+                                        <span style="color:#000;" class="currentPrice fs-1 fw-bold">$80.00</span>
+                                    </div>
+                                </div>
+                                <div class="clearall"></div>
+                                <div class="mb-3">
+                                    <button type="button" class="btn btn-lg btn-success py-3 px-5">
+                                        Yes! Add To My Order!
+                                    </button>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center mb-3">
+                                    Free Shipping In The Same Order
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 d-none border-start d-lg-flex justify-content-lg-center align-items-lg-center">
+                            <div class="text-center ">
+                                <img src="img/up1.png" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center py-3">
+                        <div class="col py-2">
+                            <a href="#" class="d-flex justify-content-center align-items-center text-secondary upsell-no"> No thank you, I don’t want to take advantage of this one-time offer </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer mt-auto">
+        <div class="container pt-4 pb-5">
+            <div class="row">
+                <div class="col-12 mt-3 pt-2 text-center footer-copyright d-flex flex-column flex-sm-row  justify-content-between align-items-center">
+                    <div class="mb-4 mb-sm-0 fs-8 text-light">
+                        ©2023 <span class="text-secondary">Drone Hawk </span>. All Rights Reserved.
+                    </div>
+                    <div class="poweredby-badge-desktop">
+                        <a href="#" target="_blank"><img src="img/checkoutbysellmorelight.svg" class="img-fluid"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+<script type="text/javascript" src="js/campaign.js"></script>
+<script>
+refId = sessionStorage.getItem('ref_id');
+
+successURL = "/thank-you.html";
+
+document.addEventListener("DOMContentLoaded", function(event) {
+    retrieveOrder();
+
+    const sendUpsell = campaign.once(createUpsell1);
+
+    const btnUpsell = document.querySelector('.btn-success')
+    const clickHandler = () => {
+        sendUpsell();
+    }
+    btnUpsell.addEventListener('click', clickHandler);
+
+
+    [...document.getElementsByClassName('upsell-no')].forEach(anchor => {
+        anchor.href = campaign.getSuccessUrl(successURL);
+    }); 
+});
+</script>
+
+
+</html>
