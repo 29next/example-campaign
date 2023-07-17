@@ -174,6 +174,7 @@ const createOrder = async () => {
             "line4": data.shipping_address_line4,
             "state": data.shipping_state,
             "postcode": data.shipping_postcode,
+            "phone_number": "",
             "country": data.shipping_country
         },
         "shipping_method": data.shipping_method,
