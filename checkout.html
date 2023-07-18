@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example Campaign</title>
     <meta name="referrer" content="no-referrer-when-downgrade" />
-    <title>Drone Hawk</title>
     <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="css/main.css">
+
 </head>
 
 <body class="bg-checkout">
@@ -16,7 +17,7 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-md-5 d-flex justify-content-center justify-content-md-start align-items-center pb-2 pb-md-0">
                     <div class="logo">
-                        <img src="img/drone-hawk-logo.png" alt="Drone Hawk" class="img-fluid">
+                        <img src="img/logo.png" alt="Example Campaign" class="img-fluid">
                     </div>
                 </div>
                 <div class="col-md-7 d-flex justify-content-center justify-content-md-end align-items-center">
@@ -76,7 +77,7 @@
                         <input type="hidden" id="card_token" name="card_token">
                         <input type="hidden" name="payment_method" id="payment_method">
                         <input type="hidden" name="selected_package_id" id="selected_package_id">
-                        <input type="hidden" name="shipping_method" id="shipping_method">
+                        <input type="hidden" name="shipping_method" id="shipping_method" value="card_token">
                         <input type="hidden" name="billing_same_as_shipping_address" id="billing_same_as_shipping_address" value='true'>
                         <div class="step-title">
                             STEP 2: CUSTOMER INFORMATION
@@ -106,13 +107,13 @@
                                         </div>
                                         <div class="invalid-message invalid-email"></div>
                                     </div>
-                                    <!-- <div class="col-12">
+                                    <div class="col-12">
                                         <div class="form-floating  ">
-                                            <input type="tel" name="phone_number" placeholder="Phone number (optional)" autocomplete="tel" class="form-control " id="id_phone_number">
+                                            <input type="tel" name="phone_number" placeholder="Phone number (optional)" autocomplete="tel" class="form-control " id="id_phone_number" maxlength="20">
                                             <label for="id_phone_number">Phone Number (optional)</label>
                                         </div>
                                         <div class="invalid-message invalid-ph"></div>
-                                    </div> -->
+                                    </div>
                                     <div class="col-12">
                                         <div class="form-floating  ">
                                             <input type="text" placeholder="Address" name="shipping_address_line1" maxlength="255" autocomplete="address-line1" class="form-control" id="id_shipping_address_line1">
@@ -324,22 +325,71 @@
             <div class="row">
                 <div class="col-12 mt-3 pt-2 text-center footer-copyright d-flex flex-column flex-sm-row  justify-content-between align-items-center">
                     <div class="mb-4 mb-sm-0 fs-8 text-light">
-                        ©2023 <span class="text-secondary">Drone Hawk </span>. All Rights Reserved.
+                        ©2023 <span class="text-secondary">Example Campaign</span>. All Rights Reserved.
                     </div>
-                    <div class="poweredby-badge-desktop">
-                        <a href="#" target="_blank"><img src="img/checkoutbysellmorelight.svg" class="img-fluid"></a>
-                    </div>
+                   
                 </div>
             </div>
         </div>
     </footer>
 </body>
-<!--  libraries  -->
-<script src="https://core.spreedly.com/iframe/iframe-v1.min.js"></script>
-<script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha512-VK2zcvntEufaimc+efOYi622VN5ZacdnufnmX7zIhCPmjhKnOi9ZDMtg1/ug5l183f19gG1/cBstPO4D8N/Img==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-<script type="text/javascript" src="js/campaign.js"></script>
-<script type="text/javascript" src="js/checkout.js"></script>
-<script type="text/javascript" src="js/form.js"></script>
+    <script type="text/javascript">
+        const publicKey = "HJiDgB1BcNDWx0lJYvP79mqDeRN8d0EVN9DfqYLv";
+        const successURL = "/upsell.html";
+        const offers = {
+            priceRetail: 20.00,
+            packages: [
+                {
+                    "id": 2,
+                    "image": "img/offer-x2.png",
+                    "quantity": 2,
+                    "name": "2x Product",
+                    "price": 18.00,
+                    "priceTotal": 36.00,
+                    "shippingPrice": 0.00,
+                    "shippingMethod": 2,
+                },
+                {
+                    "id": 4,
+                    "image": "img/offer-x4.png",
+                    "quantity": 4,
+                    "name": "4x Product",
+                    "price": 16.00,
+                    "priceTotal": 64.00,
+                    "shippingPrice": 0.00,
+                    "shippingMethod": 2,
+                },
+                {
+                    "id": 3,
+                    "image": "img/offer-x3.png",
+                    "quantity": 3,
+                    "name": "3x Product",
+                    "price": 17.00,
+                    "priceTotal": 51.00,
+                    "shippingPrice": 0.00,
+                    "shippingMethod": 2,
+                },
+                {
+                    "id": 1,
+                    "image": "img/offer-x1.png",
+                    "quantity": 1,
+                    "name": "1x Product",
+                    "price": 19.00,
+                    "priceTotal": 19.00,
+                    "shippingPrice": 7.99,
+                    "shippingMethod": 1,
+                },
+
+            ]
+        }
+        let selectedOfferId = "2";
+
+    </script>
+    <!--  libraries  -->
+    <script src="https://core.spreedly.com/iframe/iframe-v1.min.js"></script>
+    <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+    <script type="text/javascript" src="js/campaign.js"></script>
+    <script type="text/javascript" src="js/checkout.js"></script>
+    <script type="text/javascript" src="js/form.js"></script>
 
 </html>

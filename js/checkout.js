@@ -1,6 +1,7 @@
 // 
 // Variables
 // 
+let lineArr = [];
 
 // form
 const formEl = document.querySelector('.form');
@@ -25,34 +26,216 @@ const btnPaypal = document.querySelector('.pay-with-paypal');
 const btnCC = document.querySelector(".pay-with-cc");
 
 
-// Checkout 
-successURL = "/upsell1.html";
 
-
-// let refIdInitial
-let selectedOfferId
-
-// 
-// Methods
-// 
 
 /**
  *  Get Campaign
-*/
+ */
+const getCampaign = async () => {
+    console.log("get campaign");
+    try {
+
+        const response = await fetch(campaignRetrieveURL, {
+            method: 'GET',
+            headers,
+        });
+        const data = await response.json()
+
+        if (!response.ok) {
+            console.log('Something went wrong');
+            return;
+        }
+
+        console.log(data)
+
+        getCampaignData(data);
+
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getCampaignData = (data) => {
+    campaignName = data.name;
+    campaignCurrency = data.currency;
+    payEnvKey = data.payment_env_key;
+    Spreedly.init(payEnvKey, { "numberEl": "bankcard-number", "cvvEl": "bankcard-cvv" });
+}
+
+/**
+ *  Create Cart / New Prospect
+ */
+const createCart = async () => {
+
+    console.log("create prospect");
+    const formData = new FormData(formEl);
+    const data = Object.fromEntries(formData);
+
+    console.log(data);
+
+    const cartData = {
+        "user": {
+            "first_name": data.first_name,
+            "last_name": data.last_name,
+            "email": data.email
+        },
+        "lines": lineArr
+    }
+
+    try {
+        const response = await fetch(cartsCreateURL, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(cartData),
+        });
+        const result = await response.json()
+
+        if (!response.ok) {
+            console.log('Something went wrong');
+            return;
+        }
+
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+
+/**
+ * Use Create Order with Credit Card
+ */
+
+const createOrder = async () => {
+
+    console.log("create order");
+    const formData = new FormData(formEl);
+    const data = Object.fromEntries(formData);
+
+
+    const orderData = {
+        "user": {
+            "first_name": data.first_name,
+            "last_name": data.last_name,
+            "email": data.email,
+        },
+        "lines": lineArr,
+
+        "use_default_shipping_address": false,
+
+        "use_default_billing_address": false,
+        "billing_same_as_shipping_address": data.billing_same_as_shipping_address,
+        "payment_detail": {
+            "payment_method": data.payment_method,
+            "card_token": data.card_token,
+        },
+        "shipping_address": {
+            "first_name": data.first_name,
+            "last_name": data.last_name,
+            "line1": data.shipping_address_line1,
+            "line4": data.shipping_address_line4,
+            "state": data.shipping_state,
+            "postcode": data.shipping_postcode,
+            "phone_number": data.phone_number,
+            "country": data.shipping_country
+        },
+        "shipping_method": data.shipping_method,
+        "success_url": campaign.getSuccessUrl(successURL)
+    }
+
+
+    console.log(orderData);
+
+    try {
+        const response = await fetch(ordersURL, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(orderData),
+        });
+        const result = await response.json()
+
+
+        sessionStorage.setItem('ref_id', result.ref_id);
+
+        if (!result.payment_complete_url && result.number) {
+
+            location.href = campaign.getSuccessUrl(successURL);
+
+        } else if (result.payment_complete_url) {
+
+            window.location.href = result.payment_complete_url;
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+/**
+ * Use Create Order with PayPal
+ */
+const createPayPalOrder = async () => {
+    console.log("create order paypal order");
+    const formData = new FormData(formEl);
+    const data = Object.fromEntries(formData);
+
+    const orderPPData = {
+        "user": {
+            "first_name": data.first_name,
+            "last_name": data.last_name,
+            "email": data.email,
+        },
+        "lines": lineArr,
+        "payment_detail": {
+            "payment_method": data.payment_method,
+        },
+        "shipping_method": data.shipping_method,
+        "success_url": campaign.getSuccessUrl(successURL)
+    }
+
+    try {
+        const response = await fetch(ordersURL, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(orderPPData),
+        });
+        const result = await response.json()
+
+        if (!response.ok) {
+            console.log('Something went wrong');
+            console.log(orderPPData);
+            return;
+        }
+
+        console.log(result)
+
+        sessionStorage.setItem('ref_id', result.ref_id);
+
+        window.location.href = result.payment_complete_url;
+
+    } catch (error) {
+        console.log(error);
+    }
+
+
+}
 const retrieveCampaign = campaign.once(getCampaign);
 
 retrieveCampaign();
 
 /**
  * Use Create Create cart to capture prospect if email, first, and last names are valid
-*/
+ */
 const createProspect = () => {
-   
+
     const email_reg = {
-    first: /(?:[a-z0-9+!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/gi
+        first: /(?:[a-z0-9+!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/gi
     };
     if (firstName.value != '' && lastName.value != '' && (email_reg.first.test(email.value))) {
-        
+
         sendProspect()
 
     }
@@ -62,56 +245,7 @@ const sendProspect = campaign.once(createCart);
 
 /**
  * Create Packages
-*/
-
-selectedOfferId = "2";
-
-const offers = {
-    priceRetail: 39.99,
-    packages: [
-        {
-            "id": 2,
-            "image": "img/offer-x2.png",
-            "quantity": 2,
-            "name": "2x Drone Hawk",
-            "price": 17.99,
-            "priceTotal": 35.98,
-            "shippingPrice": 0.00,
-            "shippingMethod": 2,
-        },
-        {
-            "id": 4,
-            "image": "img/offer-x4.png",
-            "quantity": 4,
-            "name": "4x Drone Hawk",
-            "price": 13.99,
-            "priceTotal": 55.96,
-            "shippingPrice": 0.00,
-            "shippingMethod": 2,
-        },
-        {
-            "id": 3,
-            "image": "img/offer-x3.png",
-            "quantity": 3,
-            "name": "3x Drone Hawk",
-            "price": 15.99,
-            "priceTotal": 47.97,
-            "shippingPrice": 0.00,
-            "shippingMethod": 2,
-        },
-        {
-            "id": 1,
-            "image": "img/offer-x1.png",
-            "quantity": 1,
-            "name": "1x Drone Hawk",
-            "price": 19.99,
-            "priceTotal": 19.99,
-            "shippingPrice": 7.99,
-            "shippingMethod": 1,
-        },
-
-    ]
-}
+ */
 
 const renderPackages = () => {
     const template = `
@@ -123,8 +257,8 @@ const renderPackages = () => {
                             <span class="shipping-cost"></span> SHIPPING
                         </div>
                     </div>
-                    <div class="offer-content d-flex align-items-center py-2">
-                        <div class="offer-content-img ms-5">
+                    <div class="offer-content d-flex align-items-center ps-4 py-2">
+                        <div class="offer-content-img">
                             <img src="" class="img-fluid p-image">
                         </div>
                         <div class="offer-content-info pe-2 ms-3">
@@ -136,7 +270,6 @@ const renderPackages = () => {
                                 <s> 
                                 Orig
                                     <span class="price-each-retail"></span>
-                                    <span class="fs-9 fw-light">/each</span>
                                 </s>
                             </div>
                             <div class="offer-content-price-total h6 fw-bold text-success">
@@ -189,7 +322,7 @@ const renderPackages = () => {
 
 /**
  * Calculate totals 
-*/
+ */
 const calculateTotal = () => {
 
     let selectedPackage = document.querySelector(".offer.selected");
@@ -214,7 +347,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     renderPackages();
 
-    let firstLineItem = { package_id: selectedOfferId,  quantity: 1, is_upsell: false  };
+    let firstLineItem = { package_id: selectedOfferId, quantity: 1, is_upsell: false };
 
     lineArr.push(firstLineItem);
 
@@ -244,7 +377,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                 document.getElementById('shipping_method').value = shippingMethod;
                 document.querySelector('.selected-product-name').textContent = pName;
-                
+
                 document.querySelector('.selected-product-price').textContent = campaign.currency.format(pPriceEach);
 
                 if (pPriceShipping != 0.00) {
@@ -263,7 +396,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
                 firstLineItem.package_id = pid
 
-                
+
                 console.log("Change Line Items:", lineArr);
 
                 calculateTotal()
@@ -306,13 +439,13 @@ email.addEventListener('blur', createProspect);
 
 btnPaypal.addEventListener('click', event => {
     validate.revalidateField('#id_first_name'),
-    validate.revalidateField('#id_last_name'),
-    validate.revalidateField('#id_email')
+        validate.revalidateField('#id_last_name'),
+        validate.revalidateField('#id_email')
         .then(isValid => {
             if (isValid) {
-              console.log('Paypal Button Clicked');
-              document.getElementById('payment_method').value = 'paypal';
-              createPPOrder();
+                console.log('Paypal Button Clicked');
+                document.getElementById('payment_method').value = 'paypal';
+                createPayPalOrder();
             } else {
                 document.querySelector('.is-invalid').focus();
             }
@@ -321,9 +454,4 @@ btnPaypal.addEventListener('click', event => {
 
 btnCC.addEventListener('click', event => {
     formEl.requestSubmit();
-    console.log('CC Button Clicked')
 });
-
-
-
-

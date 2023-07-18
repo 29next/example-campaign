@@ -1,3 +1,30 @@
+/**
+ * Get Order Details for thankyou / receipt page
+*/
+const getOrderReceipt = async () => {
+    try {
+
+        const response = await fetch((ordersURL + refId + '/'), {
+            method: 'GET',
+            headers
+
+        });
+        const order = await response.json()
+
+        if (!response.ok) {
+            console.log('Something went wrong');
+            return;
+        }
+        console.log(order);
+        show(order)
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+getOrderReceipt()
+
 function show(order) {
 
     // current date format for order
@@ -69,7 +96,7 @@ function show(order) {
     containerFooter.innerHTML = `
                     <div class="row my-4">
                         <div class="col-sm  p-3 text-center">
-                            <div class="fs-6">The charge will appear on your billing statement as <span class=" fw-bold">"Your Product Reference"</span></div>
+                            <div class="fs-6">The charge will appear on your billing statement as <span class="order-reference fw-bold"></span></div>
                         </div>
                     </div>
                     <div class="row">
@@ -140,5 +167,7 @@ function show(order) {
 
     orderSubTotal.textContent = campaign.currency.format(subTotal);
 
+    const orderRefernce = document.querySelector(".order-reference");
+    orderRefernce.textContent = orderRef
 
 }

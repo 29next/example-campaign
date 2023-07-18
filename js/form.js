@@ -74,26 +74,30 @@ validate
 
         }
     )
-    // .addField(
-    //     '#id_phone_number', 
-    //     [{
-    //             rule: 'required',
-    //             errorMessage: 'Valid US phone number required',
-    //         },
+    .addField(
+        '#id_phone_number', 
+        [{
+                rule: 'required',
+                errorMessage: 'Valid US phone number required',
+            },
 
-    //         {
-    //             rule: 'customRegexp',
-    //             value: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
-    //             errorMessage: 'Invalid US Number',
+            {
+                rule: 'customRegexp',
+                value: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+                errorMessage: 'Invalid Number',
 
-    //         },
-    //     ],
-    //     {
+            },
+            {
+                rule: 'maxLength',
+                value: 15,
+            },
+        ],
+        {
 
-    //         errorsContainer: '.invalid-ph',
+            errorsContainer: '.invalid-ph',
 
-    //     }
-    // )
+        }
+    )
     .addField('#id_shipping_address_line1', [{
             rule: 'required',
             errorMessage: 'Shipping address is required',
@@ -302,4 +306,3 @@ Spreedly.on('paymentMethod', function(token, pmData) {
 });
 
 
-Spreedly.init('ZVlbCiGPapQbN11W3tig4OOxhpg', { "numberEl": "bankcard-number", "cvvEl": "bankcard-cvv" });
