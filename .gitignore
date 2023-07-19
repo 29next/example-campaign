@@ -1,6 +1,6 @@
 **/.DS_Store
 
-# Environments
+node_modules/
 .env
 .venv
 env/

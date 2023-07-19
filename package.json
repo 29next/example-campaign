@@ -1,0 +1,24 @@
+{
+  "name": "example-campaign",
+  "version": "1.0.0",
+  "description": "An example of a simple campaign that demostrates the a straight forward integration with the 29next Campaigns App",
+  "main": "checkout.html",
+  "scripts": {
+    "start": "npm run open",
+    "open": "concurrently \"http-server -p 8080\" \"open http://localhost:8080/checkout.html\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/29next/example-campaign.git"
+  },
+  "author": "29next",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/29next/example-campaign/issues"
+  },
+  "homepage": "https://github.com/29next/example-campaign#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "http-server": "^14.1.1"
+  }
+}
