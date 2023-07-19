@@ -113,6 +113,8 @@ const createOrder = async () => {
     console.log("create order");
     const formData = new FormData(formEl);
     const data = Object.fromEntries(formData);
+    btnCC.disabled = true;
+    btnCC.textContent = btnCC.dataset.loadingText;
 
 
     const orderData = {
@@ -156,6 +158,18 @@ const createOrder = async () => {
         });
         const result = await response.json()
 
+        if (!response.ok) {
+            console.log('Something went wrong');
+            btnCC.disabled = false;
+            btnCC.textContent = btnCC.dataset.text;
+            let error = Object.values(result)[0];
+            document.getElementById("payment-error-block").innerHTML = `
+                <div class="alert alert-danger">
+                    ${error}
+                </div>
+            `;
+            return;
+        }
 
         sessionStorage.setItem('ref_id', result.ref_id);
 
@@ -181,7 +195,7 @@ const createPayPalOrder = async () => {
     console.log("create order paypal order");
     const formData = new FormData(formEl);
     const data = Object.fromEntries(formData);
-
+    btnPaypal.disabled = true;
     const orderPPData = {
         "user": {
             "first_name": data.first_name,
@@ -207,6 +221,7 @@ const createPayPalOrder = async () => {
         if (!response.ok) {
             console.log('Something went wrong');
             console.log(orderPPData);
+            btnPaypal.disabled = false;
             return;
         }
 

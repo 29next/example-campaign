@@ -77,7 +77,7 @@
                         <input type="hidden" id="card_token" name="card_token">
                         <input type="hidden" name="payment_method" id="payment_method">
                         <input type="hidden" name="selected_package_id" id="selected_package_id">
-                        <input type="hidden" name="shipping_method" id="shipping_method" value="card_token">
+                        <input type="hidden" name="shipping_method" id="shipping_method">
                         <input type="hidden" name="billing_same_as_shipping_address" id="billing_same_as_shipping_address" value='true'>
                         <div class="step-title">
                             STEP 2: CUSTOMER INFORMATION
@@ -306,7 +306,7 @@
                                 <div class="row" id="step-3">
                                     <div class="col">
                                         <div class="d-grid mb-4">
-                                            <button id="cc-submit-button" type="button" class="btn btn-lg btn-success btn-checkout pay-with-cc" disabled>Pay with Credit Card</button>
+                                            <button id="cc-submit-button" type="button" class="btn btn-lg btn-success btn-checkout pay-with-cc" data-loading-text='Processing' data-text='Pay with Credit Card' disabled>Pay with Credit Card</button>
                                         </div>
                                     </div>
                                     <div id="validation-error-block"></div>

@@ -2,10 +2,10 @@
   "name": "example-campaign",
   "version": "1.0.0",
   "description": "An example of a simple campaign that demostrates the a straight forward integration with the 29next Campaigns App",
-  "main": "checkout.html",
+  "main": "index.html",
   "scripts": {
     "start": "npm run open",
-    "open": "concurrently \"http-server -p 8080\" \"open http://localhost:8080/checkout.html\""
+    "open": "concurrently \"http-server -p 8080\" \"open http://localhost:8080/\""
   },
   "repository": {
     "type": "git",

@@ -1,3 +1,5 @@
+const btnUpsell = document.querySelector('.btn-success')
+
 /**
  * Get Order Details for Upsell page
 */
@@ -38,7 +40,9 @@ const createUpsell = async () => {
     const orderData = {    
       "lines": upsellLineItem
     }
-    console.log (orderData);
+    btnUpsell.disabled = true;
+    btnUpsell.textContent = btnUpsell.dataset.loadingText;
+
     try {
         const response = await fetch((ordersURL + refId + '/upsells/'), {
             method: 'POST',
@@ -49,6 +53,8 @@ const createUpsell = async () => {
 
         if (!response.ok) {
             console.log('Something went wrong');
+            btnUpsell.disabled = false;
+            btnUpsell.textContent = btnUpsell.dataset.text;
             return;
         } 
         console.log(result);
@@ -64,7 +70,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     const sendUpsell = campaign.once(createUpsell);
 
-    const btnUpsell = document.querySelector('.btn-success')
     const clickHandler = () => {
         sendUpsell();
     }
