@@ -162,9 +162,10 @@ const createOrder = async () => {
 
             btnCC.disabled = false;
             btnCC.textContent = btnCC.dataset.text;
+
             console.log ('bad result', result);
             let error = result.non_field_errors;
-            document.getElementById("validation-error-block").innerHTML = `
+            validErrBlock.innerHTML = `
                 <div class="alert alert-danger">
                     ${error}
                 </div>
@@ -172,20 +173,38 @@ const createOrder = async () => {
             return;
 
         } else if (!response.ok && result.postcode) {
+
             btnCC.disabled = false;
             btnCC.textContent = btnCC.dataset.text;
+
             console.log ('bad postcode', result);
             let error = result.postcode;
-            document.getElementById("validation-error-block").innerHTML = `
+            validErrBlock.innerHTML = `
                 <div class="alert alert-danger">
                     ${error}
                 </div>
             `;
             return;
         
-        } else if (!response.ok) {
+        } else if (!response.ok && result.shipping_address) {
+
             btnCC.disabled = false;
             btnCC.textContent = btnCC.dataset.text;
+
+            console.log ('bad phone number', result);
+            let error = result.shipping_address.phone_number;
+            validErrBlock.innerHTML = `
+                <div class="alert alert-danger">
+                    ${error}
+                </div>
+            `;
+            return;
+        
+        } else if  (!response.ok) {
+            
+            btnCC.disabled = false;
+            btnCC.textContent = btnCC.dataset.text;
+            
             console.log ('bad result', result);
             let error = Object.values(result)[0];
             document.getElementById("payment-error-block").innerHTML = `
