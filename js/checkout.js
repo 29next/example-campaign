@@ -158,10 +158,35 @@ const createOrder = async () => {
         });
         const result = await response.json()
 
-        if (!response.ok) {
-            console.log('Something went wrong');
+        if (!response.ok && result.non_field_errors) {
+
             btnCC.disabled = false;
             btnCC.textContent = btnCC.dataset.text;
+            console.log ('bad result', result);
+            let error = result.non_field_errors;
+            document.getElementById("validation-error-block").innerHTML = `
+                <div class="alert alert-danger">
+                    ${error}
+                </div>
+            `;
+            return;
+
+        } else if (!response.ok && result.postcode) {
+            btnCC.disabled = false;
+            btnCC.textContent = btnCC.dataset.text;
+            console.log ('bad postcode', result);
+            let error = result.postcode;
+            document.getElementById("validation-error-block").innerHTML = `
+                <div class="alert alert-danger">
+                    ${error}
+                </div>
+            `;
+            return;
+        
+        } else if (!response.ok) {
+            btnCC.disabled = false;
+            btnCC.textContent = btnCC.dataset.text;
+            console.log ('bad result', result);
             let error = Object.values(result)[0];
             document.getElementById("payment-error-block").innerHTML = `
                 <div class="alert alert-danger">
