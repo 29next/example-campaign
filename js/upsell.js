@@ -19,7 +19,7 @@ const getOrder = async () => {
         } 
 
         if (result.supports_post_purchase_upsells === false) {
-            window.location.href = campaign.getSuccessUrlSkip(successURLEnd)
+            window.location.href = campaign.skipSteps(confirmationURL)
         } 
 
         console.log(result);
@@ -40,6 +40,7 @@ const createUpsell = async () => {
     const orderData = {    
       "lines": upsellLineItem
     }
+
     btnUpsell.disabled = true;
     btnUpsell.textContent = btnUpsell.dataset.loadingText;
 
@@ -58,7 +59,7 @@ const createUpsell = async () => {
             return;
         } 
         console.log(result);
-        location.href = campaign.getSuccessUrl(successURL);
+        location.href = campaign.nextStep(nextURL);
 
     } catch (error) {
         console.log(error);
@@ -66,6 +67,7 @@ const createUpsell = async () => {
 }
 
 document.addEventListener("DOMContentLoaded", function(event) {
+
     retrieveOrder();
 
     const sendUpsell = campaign.once(createUpsell);
@@ -73,10 +75,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     const clickHandler = () => {
         sendUpsell();
     }
+
     btnUpsell.addEventListener('click', clickHandler);
-
-
+    
     [...document.getElementsByClassName('upsell-no')].forEach(anchor => {
-        anchor.href = campaign.getSuccessUrl(successURL);
+        anchor.href = campaign.nextStep(nextURL);
     });
 });

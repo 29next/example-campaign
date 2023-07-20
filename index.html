@@ -109,8 +109,8 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating  ">
-                                            <input type="tel" name="phone_number" placeholder="Phone number (optional)" autocomplete="tel" class="form-control " id="id_phone_number" maxlength="20">
-                                            <label for="id_phone_number">Phone Number (optional)</label>
+                                            <input type="tel" name="phone_number" placeholder="Phone number" autocomplete="tel" class="form-control " id="id_phone_number" maxlength="20">
+                                            <label for="id_phone_number">Phone Number</label>
                                         </div>
                                         <div class="invalid-message invalid-ph"></div>
                                     </div>
@@ -335,7 +335,7 @@
 </body>
     <script type="text/javascript">
         const publicKey = "HJiDgB1BcNDWx0lJYvP79mqDeRN8d0EVN9DfqYLv";
-        const successURL = "/upsell.html";
+        const nextURL = "/upsell.html";
         const offers = {
             priceRetail: 20.00,
             packages: [
@@ -385,7 +385,6 @@
         let selectedOfferId = "2";
 
     </script>
-    <!--  libraries  -->
     <script src="https://core.spreedly.com/iframe/iframe-v1.min.js"></script>
     <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
     <script type="text/javascript" src="js/campaign.js"></script>

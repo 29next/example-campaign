@@ -31,6 +31,7 @@ const btnCC = document.querySelector(".pay-with-cc");
 /**
  *  Get Campaign
  */
+
 const getCampaign = async () => {
     console.log("get campaign");
     try {
@@ -66,6 +67,7 @@ const getCampaignData = (data) => {
 /**
  *  Create Cart / New Prospect
  */
+
 const createCart = async () => {
 
     console.log("create prospect");
@@ -113,9 +115,9 @@ const createOrder = async () => {
     console.log("create order");
     const formData = new FormData(formEl);
     const data = Object.fromEntries(formData);
+
     btnCC.disabled = true;
     btnCC.textContent = btnCC.dataset.loadingText;
-
 
     const orderData = {
         "user": {
@@ -144,7 +146,7 @@ const createOrder = async () => {
             "country": data.shipping_country
         },
         "shipping_method": data.shipping_method,
-        "success_url": campaign.getSuccessUrl(successURL)
+        "success_url": campaign.nextStep(nextURL)
     }
 
 
@@ -158,12 +160,13 @@ const createOrder = async () => {
         });
         const result = await response.json()
 
+        // Some examples of error handling from the API you can expand on
         if (!response.ok && result.non_field_errors) {
 
             btnCC.disabled = false;
             btnCC.textContent = btnCC.dataset.text;
 
-            console.log ('bad result', result);
+            console.log ('Something went wrong', result);
             let error = result.non_field_errors;
             validErrBlock.innerHTML = `
                 <div class="alert alert-danger">
@@ -177,7 +180,7 @@ const createOrder = async () => {
             btnCC.disabled = false;
             btnCC.textContent = btnCC.dataset.text;
 
-            console.log ('bad postcode', result);
+            console.log ('ZIP is incorrect', result);
             let error = result.postcode;
             validErrBlock.innerHTML = `
                 <div class="alert alert-danger">
@@ -191,7 +194,7 @@ const createOrder = async () => {
             btnCC.disabled = false;
             btnCC.textContent = btnCC.dataset.text;
 
-            console.log ('bad phone number', result);
+            console.log ('Phone number is not accepted', result);
             let error = result.shipping_address.phone_number;
             validErrBlock.innerHTML = `
                 <div class="alert alert-danger">
@@ -200,12 +203,12 @@ const createOrder = async () => {
             `;
             return;
         
-        } else if  (!response.ok) {
+        } else if (!response.ok) {
             
             btnCC.disabled = false;
             btnCC.textContent = btnCC.dataset.text;
             
-            console.log ('bad result', result);
+            console.log ('Something went wrong', result);
             let error = Object.values(result)[0];
             document.getElementById("payment-error-block").innerHTML = `
                 <div class="alert alert-danger">
@@ -219,7 +222,7 @@ const createOrder = async () => {
 
         if (!result.payment_complete_url && result.number) {
 
-            location.href = campaign.getSuccessUrl(successURL);
+            location.href = campaign.nextStep(nextURL);
 
         } else if (result.payment_complete_url) {
 
@@ -235,6 +238,7 @@ const createOrder = async () => {
 /**
  * Use Create Order with PayPal
  */
+
 const createPayPalOrder = async () => {
     console.log("create order paypal order");
     const formData = new FormData(formEl);
@@ -251,7 +255,7 @@ const createPayPalOrder = async () => {
             "payment_method": data.payment_method,
         },
         "shipping_method": data.shipping_method,
-        "success_url": campaign.getSuccessUrl(successURL)
+        "success_url": campaign.nextStep(nextURL)
     }
 
     try {
@@ -288,6 +292,7 @@ retrieveCampaign();
 /**
  * Use Create Create cart to capture prospect if email, first, and last names are valid
  */
+
 const createProspect = () => {
 
     const email_reg = {

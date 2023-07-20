@@ -24,6 +24,8 @@ The example of the [Create Order](https://developers.29next.com/docs/api/campaig
 
 We are utilizing [Just Validate](https://just-validate.dev/) as an example of form validation
 
+You can use our [test cards](https://docs.29next.com/manage/orders/test-orders) to create a card order
+
 
 ### Upsell page
 

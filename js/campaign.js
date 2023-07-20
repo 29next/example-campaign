@@ -6,31 +6,31 @@ const campaignRetrieveURL = 'https://campaigns.apps.29next.com/api/v1/campaigns/
 const cartsCreateURL = 'https://campaigns.apps.29next.com/api/v1/carts/'
 const ordersURL = 'https://campaigns.apps.29next.com/api/v1/orders/'
 
-
-
 const headers = {
     'Content-Type': 'application/json',
     'Authorization': publicKey
 }
-// let campaignName, campaignCurrency, payEnvKey, refId, successURL, successURLEnd
+
+const confirmationURL = "/thank-you.html";
+
 //
 // Methods
 // 
 let campaign = (function() {
 
-    function getSuccessUrl() {
+    function nextStep() {
         path = location.pathname.split("/");
         campaignPath = path.slice(0, path.length-1).join("/");
         base = location.protocol + '//' + location.host;
-        url = new URL(campaignPath + successURL, base)
+        url = new URL(campaignPath + nextURL, base)
         return url.href
     };
 
-    function getSuccessUrlSkip() {
+    function skipSteps() {
         path = location.pathname.split("/");
         campaignPath = path.slice(0, path.length-1).join("/");
         base = location.protocol + '//' + location.host;
-        url = new URL(campaignPath + successURLEnd, base)
+        url = new URL(campaignPath + confirmationURL, base)
         return url.href
     };
 
@@ -49,7 +49,7 @@ let campaign = (function() {
         currency: 'USD',
     });
 
-    return { getSuccessUrl, getSuccessUrlSkip, once, currency };
+    return { nextStep, skipSteps, once, currency };
 
 
 })();

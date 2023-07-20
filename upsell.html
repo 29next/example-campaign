@@ -123,20 +123,15 @@
     </footer>
 </body>
 <script type="text/javascript">
-        const publicKey = "HJiDgB1BcNDWx0lJYvP79mqDeRN8d0EVN9DfqYLv";
-        const successURLEnd = "/thank-you.html";
-        const successURL = "/thank-you.html";
-        const refId = sessionStorage.getItem('ref_id');
-        const upsellLineItem = [
-            {
-              "package_id": 5,
-              "quantity": 1,
-              "is_upsell": true
-            }
-          ]
-    </script>
+const publicKey = "HJiDgB1BcNDWx0lJYvP79mqDeRN8d0EVN9DfqYLv";
+const nextURL = "/thank-you.html";
+const refId = sessionStorage.getItem('ref_id');
+const upsellLineItem = [{
+    "package_id": 5,
+    "quantity": 1
+}]
+</script>
 <script type="text/javascript" src="js/campaign.js"></script>
 <script type="text/javascript" src="js/upsell.js"></script>
-
 
 </html>
