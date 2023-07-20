@@ -118,6 +118,7 @@ const createOrder = async () => {
 
     btnCC.disabled = true;
     btnCC.textContent = btnCC.dataset.loadingText;
+    validErrBlock.innerHTML = ``
 
     const orderData = {
         "user": {
@@ -160,7 +161,7 @@ const createOrder = async () => {
         });
         const result = await response.json()
 
-        // Some examples of error handling from the API you can expand on
+        // Some examples of error handling from the API to expand on
         if (!response.ok && result.non_field_errors) {
 
             btnCC.disabled = false;
@@ -184,7 +185,7 @@ const createOrder = async () => {
             let error = result.postcode;
             validErrBlock.innerHTML = `
                 <div class="alert alert-danger">
-                    ${error}
+                    API Response Error: ${error}
                 </div>
             `;
             return;
@@ -198,7 +199,7 @@ const createOrder = async () => {
             let error = result.shipping_address.phone_number;
             validErrBlock.innerHTML = `
                 <div class="alert alert-danger">
-                    ${error}
+                    API Response Error: ${error}
                 </div>
             `;
             return;
