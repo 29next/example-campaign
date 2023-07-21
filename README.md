@@ -1,4 +1,5 @@
-![c-api-git-hero](https://github.com/29next/example-campaign/assets/23140500/1cd9bea0-49a9-4c27-a42b-bc5f9c46c893)
+![c-api-git-hero](https://github.com/29next/example-campaign/assets/23140500/9b6bb450-7dd7-4de2-ae4a-bdc3b43c4bc9)
+
 
 
 # Example Campaign
