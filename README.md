@@ -1,3 +1,6 @@
+![c-api-git-hero](https://github.com/29next/example-campaign/assets/23140500/1cd9bea0-49a9-4c27-a42b-bc5f9c46c893)
+
+
 # Example Campaign
 
 This is an example of a simple campaign that demostrates the a straight forward integration with the [29next Campaigns App](https://developers.29next.com/docs/api/campaigns/)
