@@ -8,12 +8,12 @@ const ordersURL = 'https://campaigns.apps.29next.com/api/v1/orders/'
 
 const headers = {
     'Content-Type': 'application/json',
-    'Authorization': publicKey
+    'Authorization': publicKey,
 }
 
 const confirmationURL = "/thank-you.html";
 
-//
+//https://lucastest.29next.store/
 // Methods
 // 
 let campaign = (function() {
