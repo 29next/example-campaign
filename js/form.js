@@ -9,6 +9,162 @@ validate
     .addField(
         '#id_first_name',
         [{
+            rule: 'required',
+            errorMessage: 'First name is required',
+        },
+
+        {
+            rule: 'maxLength',
+            value: 255,
+        },
+        {
+            rule: 'customRegexp',
+            value: /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+$/gi,
+            errorMessage: 'Contains an invalid character',
+        },
+
+        ],
+
+        {
+            errorsContainer: '.invalid-fname',
+        }
+    )
+    .addField(
+        '#id_last_name',
+        [{
+            rule: 'required',
+            errorMessage: 'Last name is required',
+        },
+
+        {
+            rule: 'maxLength',
+            value: 255,
+        },
+        {
+            rule: 'customRegexp',
+            value: /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+$/gi,
+            errorMessage: 'Contains an invalid character',
+
+        },
+        ],
+
+        {
+            errorsContainer: '.invalid-lname',
+        }
+    )
+
+    .addField(
+        '#id_email',
+        [{
+            rule: 'required',
+            errorMessage: 'Email is required',
+        },
+        {
+            rule: 'email',
+            errorMessage: 'Email is invalid!',
+        },
+        {
+            rule: 'maxLength',
+            value: 255,
+        },
+        ],
+
+        {
+            errorsContainer: '.invalid-email',
+
+        }
+    )
+    .addField(
+        '#id_phone_number',
+        [{
+            rule: 'required',
+            errorMessage: 'Valid US phone number required',
+        },
+
+        {
+            rule: 'customRegexp',
+            value: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+            errorMessage: 'Invalid Number',
+
+        },
+        {
+            rule: 'maxLength',
+            value: 15,
+        },
+        ],
+        {
+
+            errorsContainer: '.invalid-ph',
+
+        }
+    )
+    .addField('#id_shipping_address_line1', [{
+        rule: 'required',
+        errorMessage: 'Shipping address is required',
+    },
+    {
+        rule: 'maxLength',
+        value: 255,
+    },
+    ], {
+
+        errorsContainer: '.invalid-shipping_address_line1',
+
+    })
+    .addField('#id_shipping_address_line4', [{
+        rule: 'required',
+        errorMessage: 'Shipping city is required',
+    },
+    {
+        rule: 'maxLength',
+        value: 255,
+    },
+
+    ], {
+
+        errorsContainer: '.invalid-shipping_address_line4',
+
+    })
+    .addField('#id_shipping_state', [{
+        rule: 'required',
+        errorMessage: 'Shipping state/province is required',
+    },], {
+
+        errorsContainer: '.invalid-shipping_state',
+
+    })
+    .addField('#id_shipping_postcode', [{
+        rule: 'required',
+        errorMessage: 'Shipping ZIP/Postcode is required',
+    },
+    {
+        rule: 'maxLength',
+        value: 64,
+    },
+    ], {
+
+        errorsContainer: '.invalid-shipping_postcode',
+
+    })
+    .addField('#id_shipping_country', [{
+        rule: 'required',
+        errorMessage: 'Shipping country is required',
+    },], {
+
+        errorsContainer: '.invalid-shipping_country',
+
+    })
+
+const shippingCheckbox = document.querySelector('#check-shipping-addres')
+shippingCheckbox.addEventListener('change', (e) => {
+    document.querySelector('#form-inf-ship').style.display = 'none'
+    if (e.target.checked === false) {
+        console.log(e.target.checked)
+        document.querySelector('#form-inf-ship').style.display = 'block'
+        window.shippinnAddressAlternative = true
+        validate.addField(
+            '#id_first_name_ship',
+            [{
                 rule: 'required',
                 errorMessage: 'First name is required',
             },
@@ -23,19 +179,19 @@ validate
                 errorMessage: 'Contains an invalid character',
             },
 
-        ],
+            ],
 
-        {
-            errorsContainer: '.invalid-fname',
-        }
-    )
-    .addField(
-        '#id_last_name',
-        [{
+            {
+                errorsContainer: '.invalid-fname-ship',
+            }
+        )
+        .addField(
+            '#id_last_name_ship',
+            [{
                 rule: 'required',
                 errorMessage: 'Last name is required',
             },
-
+    
             {
                 rule: 'maxLength',
                 value: 255,
@@ -44,121 +200,77 @@ validate
                 rule: 'customRegexp',
                 value: /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+$/gi,
                 errorMessage: 'Contains an invalid character',
-
+    
             },
-        ],
-
-        {
-            errorsContainer: '.invalid-lname',
-        }
-    )
-
-    .addField(
-        '#id_email',
-        [{
-                rule: 'required',
-                errorMessage: 'Email is required',
-            },
+            ],
+    
             {
-                rule: 'email',
-                errorMessage: 'Email is invalid!',
+                errorsContainer: '.invalid-lname-ship',
+            }
+        )
+            .addField('#id_shipping_address_line1_ship', [{
+                rule: 'required',
+                errorMessage: 'Shipping address is required',
             },
             {
                 rule: 'maxLength',
                 value: 255,
             },
-        ],
-
-        {
-            errorsContainer: '.invalid-email',
-
-        }
-    )
-    .addField(
-        '#id_phone_number', 
-        [{
+            ], {
+        
+                errorsContainer: '.invalid-shipping_address_line1_ship',
+        
+            })
+            .addField('#id_shipping_address_line4_ship', [{
                 rule: 'required',
-                errorMessage: 'Valid US phone number required',
-            },
-
-            {
-                rule: 'customRegexp',
-                value: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
-                errorMessage: 'Invalid Number',
-
+                errorMessage: 'Shipping city is required',
             },
             {
                 rule: 'maxLength',
-                value: 15,
+                value: 255,
             },
-        ],
-        {
+        
+            ], {
+        
+                errorsContainer: '.invalid-shipping_address_line4_ship',
+        
+            })
+            .addField('#id_shipping_state_ship', [{
+                rule: 'required',
+                errorMessage: 'Shipping state/province is required',
+            },], {
 
-            errorsContainer: '.invalid-ph',
+                errorsContainer: '.invalid-shipping_state_ship',
 
-        }
-    )
-    .addField('#id_shipping_address_line1', [{
-            rule: 'required',
-            errorMessage: 'Shipping address is required',
-        },
-        {
-            rule: 'maxLength',
-            value: 255,
-        },
-    ], {
+            })
+            .addField('#id_shipping_postcode_ship', [{
+                rule: 'required',
+                errorMessage: 'Shipping ZIP/Postcode is required',
+            },
+            {
+                rule: 'maxLength',
+                value: 64,
+            },
+            ], {
 
-        errorsContainer: '.invalid-shipping_address_line1',
+                errorsContainer: '.invalid-shipping_postcode_ship',
 
-    })
-    .addField('#id_shipping_address_line4', [{
-            rule: 'required',
-            errorMessage: 'Shipping city is required',
-        },
-        {
-            rule: 'maxLength',
-            value: 255,
-        },
+            })
+    } else {
+        validate.removeField('#id_first_name_ship');
+        validate.removeField('#id_last_name_ship');
+        validate.removeField('#id_shipping_address_line1_ship');
+        validate.removeField('#id_shipping_address_line4_ship');
+        validate.removeField('#id_shipping_state_ship');
+        validate.removeField('#id_shipping_postcode_ship');
+    }
 
-    ], {
-
-        errorsContainer: '.invalid-shipping_address_line4',
-
-    })
-    .addField('#id_shipping_state', [{
-        rule: 'required',
-        errorMessage: 'Shipping state/province is required',
-    }, ], {
-
-        errorsContainer: '.invalid-shipping_state',
-
-    })
-    .addField('#id_shipping_postcode', [{
-            rule: 'required',
-            errorMessage: 'Shipping ZIP/Postcode is required',
-        },
-        {
-            rule: 'maxLength',
-            value: 64,
-        },
-    ], {
-
-        errorsContainer: '.invalid-shipping_postcode',
-
-    })
-    .addField('#id_shipping_country', [{
-        rule: 'required',
-        errorMessage: 'Shipping country is required',
-    }, ], {
-
-        errorsContainer: '.invalid-shipping_country',
-
-    })
+})
 
 
-    .onFail((fields) => {
-        console.log('Field validation fail', fields);
-    })
+validate.onFail((fields) => {
+    console.log('Field validation fail', fields);
+})
     .onSuccess((event) => {
         console.log('Field validation pass, submit card details', event);
         document.getElementById('payment_method').value = 'card_token';
@@ -173,7 +285,7 @@ validate
 const style = 'color: #212529; font-size: 1rem; line-height: 1.5; font-weight: 400;width: calc(100% - 20px); height: calc(100% - 2px); position: absolute;padding: 0.13rem .75rem';
 
 // set placeholders and styles for iframe fields to make UI style
-Spreedly.on("ready", function() {
+Spreedly.on("ready", function () {
     Spreedly.setFieldType('text');
     Spreedly.setPlaceholder('cvv', "CVV");
     Spreedly.setPlaceholder('number', "Card Number");
@@ -200,7 +312,7 @@ function submitPaymentForm() {
 }
 
 // handle tokenization errors from spreedly to show to end user
-Spreedly.on('errors', function(errors) {
+Spreedly.on('errors', function (errors) {
     console.log('Card validation fail', errors);
     let error_html = '';
     errors.forEach(element => {
@@ -244,7 +356,7 @@ Spreedly.on('errors', function(errors) {
     btnCC.removeAttribute('disabled');
 });
 
-Spreedly.on('fieldEvent', function(name, type, activeEl, inputProperties) {
+Spreedly.on('fieldEvent', function (name, type, activeEl, inputProperties) {
 
     if (type == "input" && name == "number") {
         if (inputProperties["validNumber"]) {
@@ -268,7 +380,7 @@ Spreedly.on('fieldEvent', function(name, type, activeEl, inputProperties) {
 
 });
 
-Spreedly.on('validation', function(inputProperties) {
+Spreedly.on('validation', function (inputProperties) {
 
     if (!inputProperties["validNumber"]) {
         numberParent.classList.add("is-invalid");
@@ -299,7 +411,7 @@ Spreedly.on('validation', function(inputProperties) {
 });
 
 // handle payment method (card token) after successfully created
-Spreedly.on('paymentMethod', function(token, pmData) {
+Spreedly.on('paymentMethod', function (token, pmData) {
     document.getElementById('card_token').value = token;
     createOrder();
 
